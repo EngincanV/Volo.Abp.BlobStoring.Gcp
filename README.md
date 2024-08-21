@@ -1,5 +1,11 @@
 # Volo.Abp.BlobStoring.Gcp
 
+BLOB Storing Google Cloud Storage Provider can store BLOBs in Google Cloud Storage. 
+
+Read the [BLOB Storing document of ABP](https://abp.io/docs/latest/framework/infrastructure/blob-storing) to understand how to use the BLOB storing system. This document only covers how to configure containers to use the Google Cloud Storage as the storage provider.
+
+## Steps
+
 1. Create a service account key:
 * https://console.cloud.google.com/iam-admin/serviceaccounts
 * https://cloud.google.com/iam/docs/keys-create-delete
