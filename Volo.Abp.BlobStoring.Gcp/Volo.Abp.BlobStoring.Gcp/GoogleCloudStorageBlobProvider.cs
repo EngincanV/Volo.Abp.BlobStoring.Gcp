@@ -12,7 +12,7 @@ namespace Volo.Abp.BlobStoring.Gcp;
 public class GoogleCloudStorageBlobProvider : BlobProviderBase, ITransientDependency
 {
     protected GoogleCloudStorageBlobOptions GoogleCloudStorageBlobOptions { get; }
-    public ILogger<GoogleCloudStorageBlobProvider> Logger { get; }
+    protected ILogger<GoogleCloudStorageBlobProvider> Logger { get; }
 
     public GoogleCloudStorageBlobProvider(IOptions<GoogleCloudStorageBlobOptions> gcpBlobOptions, ILogger<GoogleCloudStorageBlobProvider> logger)
     {
@@ -90,7 +90,7 @@ public class GoogleCloudStorageBlobProvider : BlobProviderBase, ITransientDepend
         return stream;
     }
 
-    private async Task<StorageClient> GetClientAsync()
+    protected async Task<StorageClient> GetClientAsync()
     {
         var googleCredential = GoogleCredential.FromServiceAccountCredential(
             new ServiceAccountCredential(
