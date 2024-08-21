@@ -1,4 +1,6 @@
-# Volo.Abp.BlobStoring.Gcp
+# BlobStoring.Providers.GoogleCloudStorage
+
+<a href="https://www.nuget.org/packages/BlobStoring.Providers.GoogleCloudStorage"><img src="https://img.shields.io/nuget/v/BlobStoring.Providers.GoogleCloudStorage?logo=nuget" alt="BlobStoring.Providers.GoogleCloudStorage on Nuget" /></a>
 
 BLOB Storing Google Cloud Storage Provider can store BLOBs in Google Cloud Storage. 
 
