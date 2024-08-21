@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using Google;
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Storage.v1;
 using Google.Apis.Storage.v1.Data;
 using Google.Cloud.Storage.V1;
 using Microsoft.Extensions.Logging;
@@ -10,15 +9,15 @@ using Volo.Abp.DependencyInjection;
 
 namespace Volo.Abp.BlobStoring.Gcp;
 
-public class GcpBlobProvider : BlobProviderBase, ITransientDependency
+public class GoogleCloudStorageBlobProvider : BlobProviderBase, ITransientDependency
 {
-    private readonly GcpBlobOptions _gcpBlobOptions;
-    private readonly ILogger<GcpBlobProvider> _logger;
+    protected GoogleCloudStorageBlobOptions GoogleCloudStorageBlobOptions { get; }
+    public ILogger<GoogleCloudStorageBlobProvider> Logger { get; }
 
-    public GcpBlobProvider(IOptions<GcpBlobOptions> gcpBlobOptions, ILogger<GcpBlobProvider> logger)
+    public GoogleCloudStorageBlobProvider(IOptions<GoogleCloudStorageBlobOptions> gcpBlobOptions, ILogger<GoogleCloudStorageBlobProvider> logger)
     {
-        _logger = logger;
-        _gcpBlobOptions = gcpBlobOptions.Value;
+        GoogleCloudStorageBlobOptions = gcpBlobOptions.Value;
+        Logger = logger;
     }
 
     public override async Task SaveAsync(BlobProviderSaveArgs args)
@@ -33,7 +32,7 @@ public class GcpBlobProvider : BlobProviderBase, ITransientDependency
         }
         catch (GoogleApiException e) when (e.HttpStatusCode == HttpStatusCode.NotFound)
         {
-            bucket = await storageClient.CreateBucketAsync(_gcpBlobOptions.ProjectId, args.ContainerName);
+            bucket = await storageClient.CreateBucketAsync(GoogleCloudStorageBlobOptions.ProjectId, args.ContainerName);
         }
         catch
         {
@@ -59,7 +58,7 @@ public class GcpBlobProvider : BlobProviderBase, ITransientDependency
         }
         catch (Exception ex)
         {
-            _logger.LogException(ex);
+            Logger.LogException(ex);
         }
 
         return false;
@@ -95,11 +94,12 @@ public class GcpBlobProvider : BlobProviderBase, ITransientDependency
     {
         var googleCredential = GoogleCredential.FromServiceAccountCredential(
             new ServiceAccountCredential(
-                new ServiceAccountCredential.Initializer(_gcpBlobOptions.ClientEmail)
-                {
-                    ProjectId = _gcpBlobOptions.ProjectId,
-                    Scopes = new[] { StorageService.Scope.DevstorageFullControl }
-                }.FromPrivateKey(_gcpBlobOptions.PrivateKey)
+                new ServiceAccountCredential.Initializer(GoogleCloudStorageBlobOptions.ClientEmail)
+                    {
+                        ProjectId = GoogleCloudStorageBlobOptions.ProjectId,
+                        Scopes = GoogleCloudStorageBlobOptions.Scopes
+                    }
+                    .FromPrivateKey(GoogleCloudStorageBlobOptions.PrivateKey)
             ));
         
         return await StorageClient.CreateAsync(googleCredential);
