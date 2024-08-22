@@ -38,7 +38,7 @@ public class NewAcmeWebModule : AbpModule
 
 You can either follow the documents above or use the interactive tutorial on the Google Cloud website. Here are the complete steps you need to do (from the interactive tutorial):
 
-![image](https://github.com/user-attachments/assets/5f2a870c-e916-40fa-a214-e2a54f017eac)
+![interactive-tutorial](./assets/images/interactive-tutorial.png)
 
 3. **After you follow these instructions, a JSON file will be downloaded. You should store this .JSON file and configure the `GoogleCloudStorageBlobOptions` with these values:**
 
@@ -71,14 +71,14 @@ You can either follow the documents above or use the interactive tutorial on the
 
 Here is a gif that shows the Blob Storing System (with BlobStoring.Providers.GoogleCloudStorage) in action:
 
-![see-it-in-action](https://github.com/user-attachments/assets/4213d369-5bed-4a5c-9619-f8d6826deb01)
+![see-it-in-action](./assets/images/demo-1.gif)
 
 When a new BLOB is trying to be uploaded, the provider first creates the bucket (container) and uploads the file into that bucket. For the example above, here are the bucket details:
 
-![image](https://github.com/user-attachments/assets/40d36d22-f9d9-4e32-a4eb-e04de7560f42)
+![demo-2](./assets/images/demo-2.png)
 
 You can list, get, and download all files in this bucket in the Google Cloud dashboard:
 
-![image](https://github.com/user-attachments/assets/db8324f7-71ed-4f69-9676-23da51b29d26)
+![demo-3](./assets/images/demo-3.png)
 
 
