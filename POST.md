@@ -77,17 +77,17 @@ Configure<GoogleCloudStorageBlobOptions>(options =>
 
 You can see the simple code block below for a simple usage demonstration:
 
-```diff
+```csharp
         [AllowAnonymous]
         public virtual async Task<IRemoteStreamContent> GetFileAsync(GetFileInput input)
         {
             var fileDescriptor = await _appFileDescriptorRepository.GetAsync(input.FileId);
 
-+           //get the file as stream
-+           var stream = await _blobContainer.GetAsync(fileDescriptor.Id.ToString("N"));
+            //get the file as stream
+            var stream = await _blobContainer.GetAsync(fileDescriptor.Id.ToString("N"));
 
-+           //return the stream with the mime-type/content-type
-+           return new RemoteStreamContent(stream, fileDescriptor.Name, fileDescriptor.MimeType);
+            //return the stream with the mime-type/content-type
+            return new RemoteStreamContent(stream, fileDescriptor.Name, fileDescriptor.MimeType);
         }
 
         public virtual async Task<AppFileDescriptorDto> UploadFileAsync(IRemoteStreamContent input)
@@ -95,8 +95,8 @@ You can see the simple code block below for a simple usage demonstration:
             var id = GuidGenerator.Create();
             var fileDescriptor = await _appFileDescriptorRepository.InsertAsync(new AppFileDescriptors.AppFileDescriptor(id, input.FileName, input.ContentType));
 
-+           //Upload file with a unique blob name
-+           await _blobContainer.SaveAsync(fileDescriptor.Id.ToString("N"), input.GetStream());
+            //Upload file with a unique blob name
+            await _blobContainer.SaveAsync(fileDescriptor.Id.ToString("N"), input.GetStream());
 
             return ObjectMapper.Map<AppFileDescriptors.AppFileDescriptor, AppFileDescriptorDto>(fileDescriptor);
         }
